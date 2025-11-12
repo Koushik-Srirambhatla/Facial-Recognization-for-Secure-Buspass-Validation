@@ -1,23 +1,222 @@
-# Face Recognition Bus Pass Validation (Modern UI)
+# **Face Recognition Bus Pass Validation System**
 
-## Quick start
+A real-time AI-based system that validates bus passes using **facial recognition** instead of manual checking.
+Built using **Flask**, **OpenCV (LBPH)**, **HTML5/JS webcam**, and **SQLite**.
 
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-2. **Important:** download `haarcascade_frontalface_default.xml` from OpenCV's GitHub:
-   https://github.com/opencv/opencv/tree/master/data/haarcascades
-   Place the file in the project root.
+## 🚀 **Overview**
 
-3. Run:
-   ```bash
-   python app.py
-   ```
+Traditional bus pass checking is slow, manual, and prone to fraud. This project automates validation by capturing the passenger’s face and comparing it against a trained database of registered users.
 
-4. Open http://127.0.0.1:5000 and use the app.
+The system:
 
-## Notes
-- Trainer file `trainer.yml` is generated after running Train System.
-- Captured face images are stored in `faces/`.
+* Captures **20 face samples** during registration
+* Auto-trains the face recognition model (LBPH)
+* Prevents **duplicate registrations** (name + face)
+* Validates users in real time using webcam input
+* Blocks unregistered passengers from using bus passes
+
+---
+
+## 🎯 **Features**
+
+### 🔹 **1. Web-Based Face Registration**
+
+* Captures 20 images through the browser webcam
+* Detects face using Haarcascade
+* Saves samples as training data
+* Automatically retrains the LBPH model
+* Checks for:
+
+  * Duplicate name
+  * Duplicate face
+
+### 🔹 **2. Real-Time Validation**
+
+Two modes:
+
+* **Browser Validation** (Render-friendly)
+* **OpenCV Validation Window** (local real-time detection)
+
+Shows:
+
+* ✅ Valid Pass (recognized user)
+* ❌ Invalid User (fraud or unregistered)
+
+### 🔹 **3. Fraud Prevention**
+
+* Detects and blocks attempts to register the same person with a different name
+* Ensures every passenger is unique in the system
+
+### 🔹 **4. Clean UI**
+
+Modern UI using HTML, CSS, and JS webcam API.
+Buttons: Register, Validate, Back to Home.
+
+### 🔹 **5. Render Deployment Support**
+
+Works perfectly online using browser camera capture.
+
+---
+
+## 🛠️ **Tech Stack**
+
+| Component  | Technology                           |
+| ---------- | ------------------------------------ |
+| Backend    | Flask                                |
+| Frontend   | HTML5, CSS, JavaScript               |
+| ML         | OpenCV, LBPH Face Recognizer         |
+| Database   | SQLite                               |
+| Deployment | Render (uses opencv-python-headless) |
+
+---
+
+## 📦 **Project Structure**
+
+```
+face_buspass_project/
+│── app.py
+│── requirements.txt
+│── Procfile
+│── haarcascade_frontalface_default.xml
+│── buspass.db
+│── faces/
+│── templates/
+│   ├── index.html
+│   ├── register.html
+│   ├── validate.html
+│── static/
+```
+
+---
+
+## 🖼️ **How It Works**
+
+### **1. Registration**
+
+✔ User enters their name
+✔ System captures 20 images from webcam
+✔ Face crops are stored in `/faces`
+✔ LBPH model retrains automatically
+✔ Duplicate faces/names get blocked
+
+### **2. Validation**
+
+✔ Webcam image sent to server
+✔ LBPH predicts user ID + confidence
+✔ If confidence < threshold → Valid Pass
+✔ Else → Unregistered Passenger
+
+---
+
+## 🚀 **Run Locally**
+
+### **1. Clone Repo**
+
+```bash
+git clone https://github.com/YOUR_USERNAME/face-buspass.git
+cd face-buspass
+```
+
+### **2. Install Dependencies**
+
+```bash
+pip install -r requirements.txt
+```
+
+### **3. Run App**
+
+```bash
+python app.py
+```
+
+### **4. Open in Browser**
+
+```
+http://127.0.0.1:5000/
+```
+
+---
+
+## 🌐 **Deploy on Render**
+
+### **Use these files:**
+
+* `requirements.txt`
+* `Procfile`
+* No OpenCV GUI (`cv2.imshow`) in deployed version
+* Use only browser-based webcam routes
+
+### Start command:
+
+```
+gunicorn app:app
+```
+
+---
+
+## 🔒 **Duplicate Detection Logic**
+
+* Duplicate **name** → blocked
+* Duplicate **face** (LBPH confidence < threshold) → blocked
+  Prevents fraud and ensures every passenger is unique.
+
+---
+
+## 📸 **Sample Enrollment Flow**
+
+```
+User enters name → System captures 20 images → Model retrains → Registration complete
+```
+
+## 🎥 **Sample Validation Flow**
+
+```
+User looks into camera → Face detected → LBPH predicts → Pass Approved / Denied
+```
+
+---
+
+## 💡 **Why This Project Matters**
+
+This project solves a **real-world fraud problem** in public transport using a practical and efficient AI approach.
+It showcases:
+
+* ML pipeline design
+* Full-stack development
+* Security mechanisms
+* Error-handling
+* Deployment knowledge
+* Clean UI + UX
+
+Perfect for:
+
+* Cognizant / Infosys / TCS interviews
+* Academic major projects
+* Portfolio demonstration
+
+---
+
+## 👨‍💻 **Author**
+
+**Koushik Srirambhatla**
+Flask Developer | Machine Learning | Computer Vision
+GitHub: [https://github.com/YOUR_USERNAME](https://github.com/Koushik-Srirambhatla)
+LinkedIn: [https://linkedin.com/in/YOUR_LINK](https://linkedin.com/in/koushiksrirambhatla)
+
+---
+
+## ⭐ **Support**
+
+If you like this project, leave a **star** ⭐ on the repo!
+It motivates me to build more AI-based systems.
+
+---
+
+If you want, I can:
+
+* Add **screenshots** to the README
+* Add a **demo video GIF**
+* Add a **“Future Improvements”** section
+* Add badges (Python version, Flask version, license, etc.)
