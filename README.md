@@ -191,10 +191,3 @@ If you like this project, leave a **star** ⭐ on the repo!
 It motivates me to build more AI-based systems.
 
 ---
-
-If you want, I can:
-
-* Add **screenshots** to the README
-* Add a **demo video GIF**
-* Add a **“Future Improvements”** section
-* Add badges (Python version, Flask version, license, etc.)
