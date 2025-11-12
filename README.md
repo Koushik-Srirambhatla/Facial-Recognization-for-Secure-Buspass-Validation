@@ -176,28 +176,6 @@ User enters name → System captures 20 images → Model retrains → Registrati
 User looks into camera → Face detected → LBPH predicts → Pass Approved / Denied
 ```
 
----
-
-## 💡 **Why This Project Matters**
-
-This project solves a **real-world fraud problem** in public transport using a practical and efficient AI approach.
-It showcases:
-
-* ML pipeline design
-* Full-stack development
-* Security mechanisms
-* Error-handling
-* Deployment knowledge
-* Clean UI + UX
-
-Perfect for:
-
-* Cognizant / Infosys / TCS interviews
-* Academic major projects
-* Portfolio demonstration
-
----
-
 ## 👨‍💻 **Author**
 
 **Koushik Srirambhatla**
