@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center space-y-6">
+  <p class="text-lg text-gray-600">Automated face recognition system for secure bus pass validation. The model retrains automatically after every new registration.</p>
+
+  <div class="space-x-6">
+    <a href="/register" class="btn">Register Passenger</a>
+    <a href="/validate" class="btn">Validate Passenger</a>
+  </div>
+
+  <p class="text-sm text-gray-500 mt-6 italic">
+    No manual training required — the system learns automatically with every registration.
+  </p>
+</div>
+{% endblock %}

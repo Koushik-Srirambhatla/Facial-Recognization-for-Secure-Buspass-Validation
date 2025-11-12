@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-white p-8 rounded-xl shadow-lg text-center w-96">
+  <h2 class="text-2xl font-semibold mb-4">Register Passenger</h2>
+
+  <form id="regForm" method="POST">
+    <input type="text" id="name" name="name" placeholder="Enter Passenger Name" required
+           class="border border-gray-300 rounded-md w-full p-2 mb-4">
+
+    <video id="video" width="320" height="240" autoplay class="mx-auto border rounded-md shadow"></video>
+    <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+
+    <div class="mt-6 flex flex-col gap-3">
+      <button type="button" id="captureBtn" class="btn w-full">📸 Capture 20 Images & Register</button>
+      <a href="/" class="btn w-full bg-gray-500 hover:bg-gray-600">⬅ Back to Home</a>
+    </div>
+  </form>
+
+  <div id="status" class="mt-5 text-lg font-medium text-blue-700"></div>
+</div>
+
+<script>
+const video = document.getElementById('video');
+navigator.mediaDevices.getUserMedia({ video: true })
+  .then(stream => { video.srcObject = stream; })
+  .catch(err => alert("Camera access denied: " + err.message));
+
+document.getElementById('captureBtn').addEventListener('click', async () => {
+  const name = document.getElementById('name').value.trim();
+  const status = document.getElementById('status');
+  if (!name) {
+    alert('Please enter passenger name first.');
+    return;
+  }
+
+  status.innerText = "Capturing 20 frames... Please hold still and look at the camera.";
+  status.style.color = "#555";
+
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+  const frames = [];
+
+  // 🔥 Capture 20 images, one every 300ms
+  for (let i = 0; i < 20; i++) {
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imageData = canvas.toDataURL('image/png');
+    frames.push(imageData);
+    status.innerText = `Capturing image ${i + 1} of 20...`;
+    await new Promise(resolve => setTimeout(resolve, 300));
+  }
+
+  status.innerText = "Uploading and processing...";
+
+  const res = await fetch('/register_from_web', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, images: frames })
+  });
+
+  const data = await res.json();
+  status.innerText = data.message;
+  status.style.color = data.message.includes('✅') ? "green" : "red";
+});
+</script>
+{% endblock %}

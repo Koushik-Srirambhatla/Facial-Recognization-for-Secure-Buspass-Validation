@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-white p-8 rounded-xl shadow-lg text-center w-96">
+  <h2 class="text-2xl font-semibold mb-4">Validate Passenger</h2>
+
+  <video id="video" width="320" height="240" autoplay class="mx-auto border rounded-md shadow"></video>
+  <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+
+  <!-- Buttons Container with Proper Spacing -->
+  <div class="mt-6 flex flex-col gap-3">
+    <button type="button" id="validateBtn" class="btn w-full">✅ Validate Face</button>
+    <a href="/" class="btn w-full bg-gray-500 hover:bg-gray-600">⬅ Back to Home</a>
+  </div>
+
+  <p id="result" class="mt-5 text-lg font-medium"></p>
+</div>
+
+<script>
+const video = document.getElementById('video');
+navigator.mediaDevices.getUserMedia({ video: true })
+  .then(stream => { video.srcObject = stream; })
+  .catch(err => alert("Camera access denied: " + err.message));
+
+document.getElementById('validateBtn').addEventListener('click', async () => {
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+  const imageData = canvas.toDataURL('image/png');
+
+  const res = await fetch('/validate_from_web', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ image: imageData })
+  });
+
+  const data = await res.json();
+  const result = document.getElementById('result');
+  result.innerText = data.message;
+
+  if (data.message.includes('✅')) result.style.color = 'green';
+  else if (data.message.includes('⚠️')) result.style.color = 'orange';
+  else result.style.color = 'red';
+});
+</script>
+{% endblock %}
