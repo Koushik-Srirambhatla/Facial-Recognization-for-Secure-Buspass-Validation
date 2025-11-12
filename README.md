@@ -202,8 +202,8 @@ Perfect for:
 
 **Koushik Srirambhatla**
 Flask Developer | Machine Learning | Computer Vision
-GitHub: [https://github.com/YOUR_USERNAME](https://github.com/Koushik-Srirambhatla)
-LinkedIn: [https://linkedin.com/in/YOUR_LINK](https://linkedin.com/in/koushiksrirambhatla)
+GitHub: [Click](https://github.com/Koushik-Srirambhatla)
+LinkedIn: [Click](https://linkedin.com/in/koushiksrirambhatla)
 
 ---
 
